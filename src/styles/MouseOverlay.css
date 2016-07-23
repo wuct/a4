@@ -1,0 +1,4 @@
+.default {
+  position: absolute;
+  pointer-events: none;
+}
