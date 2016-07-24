@@ -1,10 +1,10 @@
 export const createLinearScale = ({ domain, range }) => {
-  const [dmin, dmax] = domain
-  const [rmin, rmax] = range
+  const [dStart, dEnd] = domain
+  const [rStart, rEnd] = range
 
-  const ratio = (rmax - rmin) / (dmax - dmin)
+  const ratio = (rEnd - rStart) / (dEnd - dStart)
 
   return val =>
-    (val - dmin) * ratio
+    rStart + (val - dStart) * ratio
 }
 
