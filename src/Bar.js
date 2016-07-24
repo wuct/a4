@@ -1,7 +1,5 @@
 import React, { PropTypes, createElement } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
-import withMousePosition from 'react-dom-utils/lib/withMousePosition'
-import { identity } from 'ramda'
 import Line from './Line'
 
 const enhance = compose(
@@ -18,7 +16,6 @@ const enhance = compose(
     ]),
     datum: PropTypes.object,
   }),
-  withMousePosition(identity),
 )
 
 const Bar = ({
@@ -29,7 +26,6 @@ const Bar = ({
   x,
   labelComponent,
   datum,
-  mousePosition,
   ...otherProps,
 }) => (
   <g>
@@ -47,7 +43,6 @@ const Bar = ({
     {
       labelComponent &&
         createElement(labelComponent, {
-          mousePosition,
           ...datum,
         })
     }
