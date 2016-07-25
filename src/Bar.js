@@ -1,6 +1,5 @@
 import React, { PropTypes, createElement } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
-import Line from './Line'
 
 const enhance = compose(
   pure,
@@ -26,17 +25,18 @@ const Bar = ({
   x,
   labelComponent,
   datum,
+  style,
   ...otherProps,
 }) => (
   <g>
-    <Line
-      y1={y1}
-      y2={y2}
-      x1={x}
-      x2={x}
+    <rect
+      x={x - width / 2}
+      y={y2}
+      height={y1 - y2}
+      width={width}
       style={{
-        stroke: color,
-        strokeWidth: width,
+        fill: color,
+        ...style,
       }}
       {...otherProps}
     />
