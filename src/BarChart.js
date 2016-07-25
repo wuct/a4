@@ -1,14 +1,14 @@
 import React, { createElement, PropTypes } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
 import Bar from './Bar'
+import emptyFunction from './utils/emptyFunction'
 
 const enhance = compose(
   pure,
   setPropTypes({
     yScale: PropTypes.func,
     xScale: PropTypes.func,
-    width: PropTypes.number,
-    color: PropTypes.string,
+    getBarProps: PropTypes.func,
     labelComponent: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.func,
@@ -26,8 +26,7 @@ const BarChart = ({
   data = [],
   xScale,
   yScale,
-  width,
-  color,
+  getBarProps = emptyFunction,
   labelComponent,
   ...otherProps,
 }) => (
@@ -36,13 +35,12 @@ const BarChart = ({
       data.map(datum =>
         createElement(Bar, {
           key: datum.x,
-          width,
           x: xScale(datum.x),
           y1: yScale(0),
           y2: yScale(datum.y),
-          color,
           labelComponent,
           datum,
+          ...getBarProps(datum)
         })
       )
     }
