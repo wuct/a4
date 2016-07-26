@@ -2,10 +2,12 @@
   "name": "a4",
   "version": "1.0.0",
   "description": "A pure React chart library",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "ava",
-    "build": "babel src --out-dir lib"
+    "prebuild": "rm -rf lib",
+    "build": "babel modules --out-dir lib",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
