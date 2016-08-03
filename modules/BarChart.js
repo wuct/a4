@@ -32,7 +32,7 @@ const BarChart = ({
 }) => (
   <g {...otherProps}>
     {
-      data.map(datum =>
+      data.map((datum, index) =>
         createElement(Bar, {
           key: datum.x,
           x: xScale(datum.x),
@@ -40,7 +40,7 @@ const BarChart = ({
           y2: yScale(datum.y),
           labelComponent,
           datum,
-          ...getBarProps(datum)
+          ...getBarProps(datum, index)
         })
       )
     }
