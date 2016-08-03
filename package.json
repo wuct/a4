@@ -6,7 +6,7 @@
   "scripts": {
     "test": "ava",
     "prebuild": "rm -rf lib",
-    "build": "babel modules --out-dir lib",
+    "build": "babel modules --out-dir lib --ignore __tests__",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -18,6 +18,9 @@
     "chart",
     "graph",
     "plot"
+  ],
+  "files": [
+    "lib"
   ],
   "author": "wuct",
   "license": "MIT",
