@@ -4,7 +4,6 @@
   "private": true,
   "devDependencies": {
     "nodemon": "^1.10.0",
-    "npm-run-all": "^2.3.0",
     "react-scripts": "0.2.1"
   },
   "dependencies": {
@@ -13,8 +12,8 @@
     "react-dom": "^15.2.1"
   },
   "scripts": {
-    "watch:a4": "nodemon -w ../modules -x 'npm i a4'",
-    "watch": "run-p start watch:a4",
+    "watch": "nodemon -w ../modules -x 'npm start'",
+    "prestart": "npm i a4",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
