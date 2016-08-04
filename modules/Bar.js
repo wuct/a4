@@ -18,7 +18,7 @@ const enhance = compose(
 )
 
 const Bar = ({
-  width,
+  width = 10,
   color,
   y1,
   y2,
