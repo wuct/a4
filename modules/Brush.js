@@ -1,6 +1,6 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
-import { isNil, any } from 'ramda'
+import { isNil, any, clamp } from 'ramda'
 import createPath from './utils/createPath'
 
 const styles = {
@@ -37,26 +37,32 @@ class Brush extends React.Component {
       endX: null,
       endY: null,
     })
+
+    window.addEventListener('mouseup', this.onMouseUp)
+    window.addEventListener('mousemove', this.onMouseMove)
   }
 
   onMouseUp = ({ clientX, clientY }) => {
-    const { top, left } = this.overlayDOM.getBoundingClientRect()
+    const { top, bottom, left, right } = this.overlayDOM.getBoundingClientRect()
 
     this.setState({
       isMouseDown: false,
-      endX: clientX - left,
-      endY: clientY - top,
+      endX: clamp(left, right, clientX) - left,
+      endY: clamp(top, bottom, clientY) - top,
     })
+
+    window.removeEventListener('mouseup', this.onMouseUp)
+    window.removeEventListener('mousemove', this.onMouseMove)
   }
 
   onMouseMove = ({ clientX, clientY }) => {
     if (!this.state.isMouseDown) return
 
-    const { top, left } = this.overlayDOM.getBoundingClientRect()
+    const { top, bottom, left, right } = this.overlayDOM.getBoundingClientRect()
 
     this.setState({
-      endX: clientX - left,
-      endY: clientY - top,
+      endX: clamp(left, right, clientX) - left,
+      endY: clamp(top, bottom, clientY) - top,
     })
   }
 
@@ -80,8 +86,6 @@ class Brush extends React.Component {
           height={height}
           fill="green"
           onMouseDown={this.onMouseDown}
-          onMouseUp={this.onMouseUp}
-          onMouseMove={this.onMouseMove}
           style={styles}
           />
         {
