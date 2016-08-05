@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "date-fp": "^4.4.2",
-    "ramda": "^0.21.0",
+    "ramda": "^0.22.0",
     "recompose": "^0.20.2"
   },
   "peerDependencies": {
