@@ -23,6 +23,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.json'],
     alias: {
+      'a4': require.resolve('../../modules'),
       // This `alias` section can be safely removed after ejection.
       // We do this because `babel-runtime` may be inside `react-scripts`,
       // so when `babel-plugin-transform-runtime` imports it, it will not be
@@ -49,7 +50,10 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        include: paths.appSrc,
+        include: [
+          paths.appSrc,
+          path.resolve(__dirname + '/../../modules'),
+        ],
         loader: 'babel',
         query: require('./babel.dev')
       },
