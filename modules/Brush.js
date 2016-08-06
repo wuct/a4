@@ -2,7 +2,7 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import { isNil, any, clamp } from 'ramda'
 import createPath from './utils/createPath'
-import brushable from './brushable'
+import dragable from './dragable'
 import BrushSelection from './BrushSelection'
 
 const styles = {
@@ -21,10 +21,15 @@ const createRectPathMaybeFromStartToEnd = ({ startX, startY, endX, endY }) => {
 }
 
 class Brush extends React.Component {
+  onSelectionDraging = ({ startX, startY, endX, endY}) => {}
+
+  onSelectionDragEnd = () => {}
+
   render() {
     const {
       width,
       height,
+      isDraging,
     } = this.props
 
     const path = createRectPathMaybeFromStartToEnd(this.props)
@@ -35,7 +40,7 @@ class Brush extends React.Component {
           ref={ref => { this.overlay = ref }}
           width={width}
           height={height}
-          fill="green"
+          fill="rgba(0, 0, 0, 0.1)"
           style={styles}
           />
         {
@@ -44,7 +49,9 @@ class Brush extends React.Component {
               d={path}
               fill="red"
               cursor="move"
-              pointerEvents={this.props.isBrushing ? 'none' : 'all'}
+              pointerEvents={isDraging ? 'none' : 'all'}
+              onDraging={this.onSelectionDraging}
+              onDragEnd={this.onSelectionDragEnd}
             />
         }
       </g>
@@ -52,4 +59,4 @@ class Brush extends React.Component {
   }
 }
 
-export default brushable(Brush)
+export default dragable(Brush)

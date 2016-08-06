@@ -1,13 +1,20 @@
 import React from 'react'
+import dragable from './dragable'
 
-class BrushSelection extends React.Component {
-  render () {
-    return (
-      <path
-        {...this.props}
-      />
-    )
-  }
+const BrushSelection = ({
+  setDragState,
+  isDraging,
+  startX,
+  startY,
+  endX,
+  endY,
+  ...otherProps,
+}) => {
+  return (
+    <path
+      {...otherProps}
+    />
+  )
 }
 
-export default BrushSelection
+export default dragable(BrushSelection)
