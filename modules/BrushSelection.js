@@ -1,5 +1,4 @@
 import React from 'react'
-import dragable from './dragable'
 
 const BrushSelection = ({
   setDragState,
@@ -17,4 +16,4 @@ const BrushSelection = ({
   )
 }
 
-export default dragable(BrushSelection)
+export default BrushSelection

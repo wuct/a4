@@ -1,41 +1,82 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
-import { isNil, any, clamp } from 'ramda'
+import { clamp } from 'ramda'
 import createPath from './utils/createPath'
-import dragable from './dragable'
+import Dragable from './Dragable'
 import BrushSelection from './BrushSelection'
 
 const styles = {
   cursor: 'crosshair'
 }
 
-const createRectPathMaybeFromStartToEnd = ({ startX, startY, endX, endY }) => {
-  if (any(isNil)([startX, startY, endX, endY])) return null
-  return createPath([
-    [startX, startY],
-    [startX, endY],
-    [endX, endY],
-    [endX, startY],
-    [startX, startY],
+const createPathFromArea = ({ x0, y0, x1, y1 }) =>
+  createPath([
+    [x0, y0],
+    [x0, y1],
+    [x1, y1],
+    [x1, y0],
+    [x0, y0],
   ])
-}
 
 class Brush extends React.Component {
-  onSelectionDraging = ({ startX, startY, endX, endY}) => {}
+  state = {
+    brushSelection: null
+  }
 
-  onSelectionDragEnd = () => {}
+  overlay = null
+
+  clampSelectionByBoundingClientRect = ({ x0, y0, x1, y1 }) => {
+    const {
+      top,
+      bottom,
+      left,
+      right,
+    } = this.overlay.getBoundingClientRect()
+
+    return {
+      x0: x0 - left,
+      y0: y0 - top,
+      x1: clamp(left, right, x1) - left,
+      y1: clamp(top, bottom, y1) - top,
+    }
+  }
+
+  onBrushStart = () =>
+    this.setState({
+      isBrushing: true,
+      brushSelection: null,
+    })
+
+  onBrushing = dragArea =>
+    this.setState({
+      brushSelection: this.clampSelectionByBoundingClientRect(dragArea)
+    })
+
+  onBrushEnd = dragArea =>
+    this.setState({
+      isBrushing: false,
+      brushSelection: this.clampSelectionByBoundingClientRect(dragArea)
+    })
 
   render() {
     const {
       width,
       height,
-      isDraging,
     } = this.props
 
-    const path = createRectPathMaybeFromStartToEnd(this.props)
+    const {
+      brushSelection,
+      isBrushing,
+    } = this.state
+
+    console.log(isBrushing)
 
     return (
-      <g>
+      <Dragable
+        onDragStart={this.onBrushStart}
+        onDraging={this.onBrushing}
+        onDragEnd={this.onBrushEnd}
+      >
         <rect
           ref={ref => { this.overlay = ref }}
           width={width}
@@ -44,19 +85,17 @@ class Brush extends React.Component {
           style={styles}
           />
         {
-          path &&
+          brushSelection &&
             <BrushSelection
-              d={path}
+              d={createPathFromArea(brushSelection)}
               fill="red"
               cursor="move"
-              pointerEvents={isDraging ? 'none' : 'all'}
-              onDraging={this.onSelectionDraging}
-              onDragEnd={this.onSelectionDragEnd}
+              pointerEvents={isBrushing ? 'none' : 'all'}
             />
         }
-      </g>
+      </Dragable>
     )
   }
 }
 
-export default dragable(Brush)
+export default Brush
