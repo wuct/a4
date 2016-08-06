@@ -69,8 +69,6 @@ class Brush extends React.Component {
       isBrushing,
     } = this.state
 
-    console.log(isBrushing)
-
     return (
       <Dragable
         onDragStart={this.onBrushStart}
