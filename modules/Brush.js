@@ -2,6 +2,8 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import { isNil, any, clamp } from 'ramda'
 import createPath from './utils/createPath'
+import brushable from './brushable'
+import BrushSelection from './BrushSelection'
 
 const styles = {
   cursor: 'crosshair'
@@ -19,64 +21,13 @@ const createRectPathMaybeFromStartToEnd = ({ startX, startY, endX, endY }) => {
 }
 
 class Brush extends React.Component {
-  state = {
-    isMouseDown: false,
-    startX: null,
-    startY: null,
-    endX: null,
-    endY: null,
-  }
-
-  onMouseDown = ({ clientX, clientY }) => {
-    const { top, left } = this.overlayDOM.getBoundingClientRect()
-
-    this.setState({
-      isMouseDown: true,
-      startX: clientX - left,
-      startY: clientY - top,
-      endX: null,
-      endY: null,
-    })
-
-    window.addEventListener('mouseup', this.onMouseUp)
-    window.addEventListener('mousemove', this.onMouseMove)
-  }
-
-  onMouseUp = ({ clientX, clientY }) => {
-    const { top, bottom, left, right } = this.overlayDOM.getBoundingClientRect()
-
-    this.setState({
-      isMouseDown: false,
-      endX: clamp(left, right, clientX) - left,
-      endY: clamp(top, bottom, clientY) - top,
-    })
-
-    window.removeEventListener('mouseup', this.onMouseUp)
-    window.removeEventListener('mousemove', this.onMouseMove)
-  }
-
-  onMouseMove = ({ clientX, clientY }) => {
-    if (!this.state.isMouseDown) return
-
-    const { top, bottom, left, right } = this.overlayDOM.getBoundingClientRect()
-
-    this.setState({
-      endX: clamp(left, right, clientX) - left,
-      endY: clamp(top, bottom, clientY) - top,
-    })
-  }
-
-  componentDidMount() {
-    this.overlayDOM = findDOMNode(this.overlay)
-  }
-
   render() {
     const {
       width,
       height,
     } = this.props
 
-    const path = createRectPathMaybeFromStartToEnd(this.state)
+    const path = createRectPathMaybeFromStartToEnd(this.props)
 
     return (
       <g>
@@ -85,15 +36,15 @@ class Brush extends React.Component {
           width={width}
           height={height}
           fill="green"
-          onMouseDown={this.onMouseDown}
           style={styles}
           />
         {
           path &&
-            <path
+            <BrushSelection
               d={path}
               fill="red"
-              pointerEvents={this.state.isMouseDown ? 'none' : 'all'}
+              cursor="move"
+              pointerEvents={this.props.isBrushing ? 'none' : 'all'}
             />
         }
       </g>
@@ -101,4 +52,4 @@ class Brush extends React.Component {
   }
 }
 
-export default Brush
+export default brushable(Brush)
