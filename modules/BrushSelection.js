@@ -1,4 +1,5 @@
 import React from 'react'
+import Dragable from './Dragable'
 
 const BrushSelection = ({
   setDragState,
@@ -7,12 +8,19 @@ const BrushSelection = ({
   startY,
   endX,
   endY,
+  onDraging,
+  onDragEnd,
   ...otherProps,
 }) => {
   return (
-    <path
-      {...otherProps}
-    />
+    <Dragable
+      onDraging={onDraging}
+      onDragEnd={onDragEnd}
+    >
+      <path
+        {...otherProps}
+      />
+    </Dragable>
   )
 }
 
