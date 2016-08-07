@@ -1,6 +1,6 @@
 {
   "name": "a4",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A pure React chart library",
   "main": "lib/index.js",
   "scripts": {
