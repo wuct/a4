@@ -1,15 +1,15 @@
 import React from 'react'
-import { BarChart } from 'a4'
-import { createLinearScale } from 'a4/lib/utils/createScale'
+import { BarChart, Brush } from 'a4'
+import { createLinearScale } from 'a4'
 
 const xScale = createLinearScale({
   domain: [1, 5],
-  range: [20, 380],
+  range: [10, 190],
 })
 
 const yScale = createLinearScale({
   domain: [1, 5],
-  range: [400, 40],
+  range: [190, 0],
 })
 
 const data = [
@@ -20,18 +20,21 @@ const data = [
   { x: 5, y: 5},
 ]
 
-console.log(xScale(1))
 const BarChartExample = () =>
-  <svg width="400" height="400">
+  <svg width="200" height="200">
     <BarChart
       data={data}
       xScale={xScale}
       yScale={yScale}
       getBarProps={() => ({
-        width: 40,
-        color: "yellowgreen"
+        width: 20,
+        color: "#5d9ce3"
       })}
-      width={40}
+    />
+    <Brush
+      width={200}
+      height={200}
+      onBrushEnd={b => console.log(b)}
     />
   </svg>
 
