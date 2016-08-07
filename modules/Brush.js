@@ -5,6 +5,7 @@ import createPath from './utils/createPath'
 import translate from './utils/translate'
 import Dragable from './Dragable'
 import BrushSelection from './BrushSelection'
+import emptyFunction from './utils/emptyFunction'
 
 const { max, min } = Math
 
@@ -27,6 +28,12 @@ const transformAreaToDelta = ({ x0, y0, x1, y1 }) => ({
 })
 
 class Brush extends React.Component {
+  static defaultProps = {
+    onBrushStart: emptyFunction,
+    onBrushing: emptyFunction,
+    onBrushEnd: emptyFunction,
+  }
+
   state = {
     selection: null,
     delta: null,
@@ -55,22 +62,22 @@ class Brush extends React.Component {
     }
   }
 
-  onBrushStart = () =>
+  onBrushStart = dragArea =>
     this.setState({
       isBrushing: true,
       selection: null,
-    })
+    }, () => this.props.onBrushStart(dragArea))
 
   onBrushing = dragArea =>
     this.setState({
       selection: this.clampSelectionByBoundaries(dragArea)
-    })
+    }, () => this.props.onBrushing(dragArea))
 
   onBrushEnd = dragArea =>
     this.setState({
       isBrushing: false,
       selection: this.clampSelectionByBoundaries(dragArea)
-    })
+    }, () => this.props.onBrushEnd(dragArea))
 
   onSelectionDraging = pipe(
     transformAreaToDelta,
@@ -88,21 +95,24 @@ class Brush extends React.Component {
       selection: { x0, x1, y0, y1 },
     } = this.state
 
+    const newArea = {
+      x0: x0 + dx,
+      x1: x1 + dx,
+      y0: y0 + dy,
+      y1: y1 + dy,
+    }
+
     this.setState({
       delta: null,
-      selection: {
-        x0: x0 + dx,
-        x1: x1 + dx,
-        y0: y0 + dy,
-        y1: y1 + dy,
-      }
-    })
+      selection: newArea,
+    }, () => this.props.onBrushEnd(newArea))
   }
 
   render() {
     const {
       width,
       height,
+      fill = 'rgba(0, 0, 0, 0.1)',
     } = this.props
 
     const {
@@ -111,7 +121,6 @@ class Brush extends React.Component {
       isBrushing,
     } = this.state
 
-
     return (
       <Dragable
         onDragStart={this.onBrushStart}
@@ -119,10 +128,10 @@ class Brush extends React.Component {
         onDragEnd={this.onBrushEnd}
       >
         <rect
+          opacity="0"
           ref={ref => { this.overlay = ref }}
           width={width}
           height={height}
-          fill="rgba(0, 0, 0, 0.1)"
           style={styles}
           />
         {
@@ -130,7 +139,7 @@ class Brush extends React.Component {
             <BrushSelection
               d={createPathFromArea(selection)}
               transform={delta ? translate(delta.dx, delta.dy) : undefined}
-              fill="red"
+              fill={fill}
               cursor="move"
               pointerEvents={isBrushing ? 'none' : 'all'}
               onDraging={this.onSelectionDraging}
