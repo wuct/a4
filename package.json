@@ -4,6 +4,7 @@
   "description": "A pure React chart library",
   "main": "lib/index.js",
   "scripts": {
+    "lint": "eslint ./",
     "test": "ava",
     "prebuild": "rm -rf lib",
     "build": "babel modules --out-dir lib --ignore __tests__",
