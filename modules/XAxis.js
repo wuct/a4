@@ -3,7 +3,6 @@ import { getContext } from 'recompose'
 import { isNil } from 'ramda'
 import Axis from './Axis'
 import { translateY } from './utils/translate'
-import warning from 'fbjs/lib/warning'
 
 const enhance = getContext({
   height: PropTypes.number,
@@ -38,11 +37,6 @@ const XAxis = ({
     return yMinPosition
   }
 
-  warning(
-    isNil(xs),
-    '[Chart]: xs is deprecated, use tickValues instead'
-  )
-
   return createElement(Axis, {
     axis: 'x',
     tickValues: tickValues || xs,
@@ -53,4 +47,3 @@ const XAxis = ({
 }
 
 export default enhance(XAxis)
-

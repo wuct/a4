@@ -1,8 +1,11 @@
 import React, { createElement, PropTypes } from 'react'
 import { compose, pure, setPropTypes } from 'recompose'
-import { isFunction } from 'lodash'
+import R from 'ramda'
 import Label, { propTypes as LabelPropTypes } from './Label'
 import { translateX, translateY } from './utils/translate'
+
+
+const isFunction = R.is(Function)
 
 const handleLabel = (label, value, i) => {
   if (isFunction(label)) {

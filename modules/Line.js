@@ -1,9 +1,9 @@
 import React from 'react'
 import pure from 'recompose/pure'
 
-const Line = ({ className, ...otherProps }) =>
+const Line = props =>
   <line
-    {...otherProps}
+    {...props}
   />
 
 export default pure(Line)

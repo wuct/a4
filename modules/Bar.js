@@ -30,7 +30,7 @@ const Bar = ({
 }) => (
   <g>
     <rect
-      x={x - width / 2}
+      x={x - (width / 2)}
       y={y2}
       height={y1 - y2}
       width={width}

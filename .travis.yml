@@ -1,7 +1,6 @@
 language: node_js
 node_js:
-  - "6"
+  - "node"
 script:
-  # TODO: fix linting
-  # - npm run lint
+  - npm run lint
   - npm run test

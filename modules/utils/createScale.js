@@ -1,6 +1,5 @@
-import { evolve, map, compose } from 'ramda'
 import { unixTime } from 'date-fp'
-
+import R from 'ramda'
 
 export const createLinearScale = ({ domain, range }) => {
   const [dStart, dEnd] = domain
@@ -9,7 +8,7 @@ export const createLinearScale = ({ domain, range }) => {
   const ratio = (rEnd - rStart) / (dEnd - dStart)
 
   return val =>
-    rStart + (val - dStart) * ratio
+    rStart + ((val - dStart) * ratio)
 }
 
 
@@ -18,9 +17,8 @@ export const createTimeScale = ({ domain, range }) => {
 
   const unixTimeScale = createLinearScale({
     domain: domain.map(unixTime),
-    range
+    range,
   })
 
-  return compose(unixTimeScale, unixTime)
+  return R.compose(unixTimeScale, unixTime)
 }
-
