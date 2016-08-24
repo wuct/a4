@@ -1,4 +1,4 @@
-import React, { PropTypes, createElement } from 'react'
+import React, { PropTypes } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
 
 const enhance = compose(
@@ -19,7 +19,6 @@ const Bar = ({
   y1,
   y2,
   x,
-  datum,
   style,
   ...otherProps,
 }) => (
