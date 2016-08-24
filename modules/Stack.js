@@ -1,10 +1,10 @@
 import React, { Children, PropTypes, cloneElement } from 'react'
 import { getContext } from 'recompose'
 import { pipe, map, flatten, prop, groupBy, merge, take, sum } from 'ramda'
-import { translateY } from '../charts/utils/translate'
+import { translateY } from './utils/translate'
 
 const embedPropsIntoData =
-  map(({ props: { data = [], ...otherProps } }) =>
+  map(({ props: { data = [], ...otherProps }}) =>
     data.map(merge(otherProps))
   )
 

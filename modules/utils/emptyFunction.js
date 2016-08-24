@@ -1,1 +1,1 @@
-export default function emptyFunction () {}
+export default function emptyFunction() {}

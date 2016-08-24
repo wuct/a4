@@ -1,4 +1,4 @@
-import React, { createElement } from 'react'
+import React from 'react'
 import { findDOMNode } from 'react-dom'
 import emptyFunction from './utils/emptyFunction'
 
@@ -9,8 +9,16 @@ class Dragable extends React.Component {
     onDragEnd: emptyFunction,
   }
 
-  isDraging = false
-  dragStartPosition = {}
+  componentDidMount() {
+    this.DOM = findDOMNode(this)
+    this.DOM.addEventListener('mousedown', this.onMouseDown)
+  }
+
+  componentWillUnmount() {
+    this.DOM.removeEventListener('mousedown', this.onMouseDown)
+    window.removeEventListener('mouseup', this.onMouseUp)
+    window.removeEventListener('mousemove', this.onMouseMove)
+  }
 
   onMouseDown = e => {
     e.stopPropagation()
@@ -55,16 +63,8 @@ class Dragable extends React.Component {
     })
   }
 
-  componentDidMount() {
-    this.DOM = findDOMNode(this)
-    this.DOM.addEventListener('mousedown', this.onMouseDown)
-  }
-
-  componentWillUnmount() {
-    this.DOM.removeEventListener('mousedown', this.onMouseDown)
-    window.removeEventListener('mouseup', this.onMouseUp)
-    window.removeEventListener('mousemove', this.onMouseMove)
-  }
+  isDraging = false
+  dragStartPosition = {}
 
   render() {
     return <g>{this.props.children}</g>

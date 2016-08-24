@@ -1,8 +1,8 @@
-import { range } from 'ramda'
+import R from 'ramda'
 
 const getTicks = (count, start, end) => {
   const interval = (end - start) / (count - 1)
-  return range(0, count).map(i => start + i * interval)
+  return R.range(0, count).map(i => start + (i * interval))
 }
 
 export default getTicks

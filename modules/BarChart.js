@@ -40,7 +40,7 @@ const BarChart = ({
           y2: yScale(datum.y),
           labelComponent,
           datum,
-          ...getBarProps(datum, index)
+          ...getBarProps(datum, index),
         })
       )
     }

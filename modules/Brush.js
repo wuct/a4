@@ -1,6 +1,5 @@
 import React from 'react'
-import { findDOMNode } from 'react-dom'
-import { clamp, all, and, both, gte, lte, flip, pipe, evolve } from 'ramda'
+import R from 'ramda'
 import createPath from './utils/createPath'
 import translate from './utils/translate'
 import Dragable from './Dragable'
@@ -10,7 +9,7 @@ import emptyFunction from './utils/emptyFunction'
 const { max, min } = Math
 
 const styles = {
-  cursor: 'crosshair'
+  cursor: 'crosshair',
 }
 
 const createPathFromArea = ({ x0, y0, x1, y1 }) =>
@@ -39,29 +38,6 @@ class Brush extends React.Component {
     delta: null,
   }
 
-  overlay = null
-
-  clampSelectionByBoundaries = ({ x0, y0, x1, y1 }) => {
-    const { top, bottom, left, right } = this.overlay.getBoundingClientRect()
-
-    return {
-      x0: x0 - left,
-      y0: y0 - top,
-      x1: clamp(left, right, x1) - left,
-      y1: clamp(top, bottom, y1) - top,
-    }
-  }
-
-  clampDeltaByBoundaries = ({ dx, dy }) => {
-    const { selection: { x0, x1, y0, y1 } = {}} = this.state
-    const { width, height } = this.overlay.getBoundingClientRect()
-
-    return {
-      dx: clamp(-min(x0, x1), width - max(x0, x1))(dx),
-      dy: clamp(-min(y0, y1), height - max(y0, y1))(dy),
-    }
-  }
-
   onBrushStart = dragArea =>
     this.setState({
       isBrushing: true,
@@ -70,16 +46,16 @@ class Brush extends React.Component {
 
   onBrushing = dragArea =>
     this.setState({
-      selection: this.clampSelectionByBoundaries(dragArea)
+      selection: this.clampSelectionByBoundaries(dragArea),
     }, () => this.props.onBrushing(dragArea))
 
   onBrushEnd = dragArea =>
     this.setState({
       isBrushing: false,
-      selection: this.clampSelectionByBoundaries(dragArea)
+      selection: this.clampSelectionByBoundaries(dragArea),
     }, () => this.props.onBrushEnd(dragArea))
 
-  onSelectionDraging = pipe(
+  onSelectionDraging = R.pipe(
     transformAreaToDelta,
     this.clampDeltaByBoundaries,
     ({ dx, dy }) => {
@@ -108,6 +84,29 @@ class Brush extends React.Component {
     }, () => this.props.onBrushEnd(newArea))
   }
 
+  overlay = null
+
+  clampSelectionByBoundaries = ({ x0, y0, x1, y1 }) => {
+    const { top, bottom, left, right } = this.overlay.getBoundingClientRect()
+
+    return {
+      x0: x0 - left,
+      y0: y0 - top,
+      x1: R.clamp(left, right, x1) - left,
+      y1: R.clamp(top, bottom, y1) - top,
+    }
+  }
+
+  clampDeltaByBoundaries = ({ dx, dy }) => {
+    const { selection: { x0, x1, y0, y1 } = {}} = this.state
+    const { width, height } = this.overlay.getBoundingClientRect()
+
+    return {
+      dx: R.clamp(-min(x0, x1), width - max(x0, x1))(dx),
+      dy: R.clamp(-min(y0, y1), height - max(y0, y1))(dy),
+    }
+  }
+
   render() {
     const {
       width,
@@ -133,7 +132,7 @@ class Brush extends React.Component {
           width={width}
           height={height}
           style={styles}
-          />
+        />
         {
           selection &&
             <BrushSelection
