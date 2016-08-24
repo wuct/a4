@@ -1,9 +1,0 @@
-.default {
-  fill: currentColor;
-  font-size: 12px;
-}
-
-.small {
-  composes: default;
-  transform: scale(0.77);
-}
