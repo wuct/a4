@@ -20,3 +20,5 @@ rules:
       - .jsx
   react/prop-types:
     - 0
+  react/sort-comp:
+    - 0

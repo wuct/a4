@@ -9,6 +9,9 @@ class Dragable extends React.Component {
     onDragEnd: emptyFunction,
   }
 
+  isDraging = false
+  dragStartPosition = {}
+
   componentDidMount() {
     this.DOM = findDOMNode(this)
     this.DOM.addEventListener('mousedown', this.onMouseDown)
@@ -63,8 +66,6 @@ class Dragable extends React.Component {
     })
   }
 
-  isDraging = false
-  dragStartPosition = {}
 
   render() {
     return <g>{this.props.children}</g>
