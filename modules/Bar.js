@@ -1,4 +1,4 @@
-import React, { PropTypes, createElement } from 'react'
+import React, { PropTypes } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
 
 const enhance = compose(
@@ -9,10 +9,6 @@ const enhance = compose(
     y1: PropTypes.number,
     y2: PropTypes.number,
     x: PropTypes.number,
-    labelComponent: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.func,
-    ]),
     datum: PropTypes.object,
   }),
 )
@@ -23,8 +19,6 @@ const Bar = ({
   y1,
   y2,
   x,
-  labelComponent,
-  datum,
   style,
   ...otherProps,
 }) => (
@@ -40,12 +34,6 @@ const Bar = ({
       }}
       {...otherProps}
     />
-    {
-      labelComponent &&
-        createElement(labelComponent, {
-          ...datum,
-        })
-    }
   </g>
 )
 
