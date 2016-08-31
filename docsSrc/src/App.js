@@ -14,6 +14,7 @@ class App extends Component {
         </div>
         <p className="App-intro">
           <BarChartExample />
+          <h3>Click and drag to see how Brush works!</h3>
         </p>
       </div>
     )
