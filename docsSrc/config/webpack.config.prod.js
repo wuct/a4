@@ -6,13 +6,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
 
-var homepagePath = require(paths.appPackageJson).homepage;
-var publicPath = homepagePath ? url.parse(homepagePath).pathname : '/';
-if (!publicPath.endsWith('/')) {
-  // Prevents incorrect paths in file-loader
-  publicPath += '/';
-}
-
 module.exports = {
   bail: true,
   devtool: 'source-map',
@@ -24,7 +17,7 @@ module.exports = {
     path: paths.appBuild,
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-    publicPath: publicPath
+    publicPath: ''
   },
   resolve: {
     extensions: ['', '.js', '.json'],
