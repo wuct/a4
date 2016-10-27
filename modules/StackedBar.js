@@ -7,7 +7,7 @@ const StackedBar = ({
   data,
   scale,
   width,
-  ...otherProps,
+  ...otherProps
 }) => {
   const dataNames = Object.keys(data)
 

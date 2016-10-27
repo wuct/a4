@@ -23,7 +23,7 @@ class Dragable extends React.Component {
     window.removeEventListener('mousemove', this.onMouseMove)
   }
 
-  onMouseDown = e => {
+  onMouseDown = (e) => {
     e.stopPropagation()
 
     this.isDraging = true
@@ -38,7 +38,7 @@ class Dragable extends React.Component {
     window.addEventListener('mousemove', this.onMouseMove)
   }
 
-  onMouseUp = e => {
+  onMouseUp = (e) => {
     e.stopPropagation()
 
     this.props.onDragEnd({
@@ -54,7 +54,7 @@ class Dragable extends React.Component {
     window.removeEventListener('mousemove', this.onMouseMove)
   }
 
-  onMouseMove = e => {
+  onMouseMove = (e) => {
     e.stopPropagation()
 
     if (!this.isDraging) return

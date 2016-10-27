@@ -21,7 +21,7 @@ const XAxis = ({
   yScale,
   xs,
   tickValues,
-  ...otherProps,
+  ...otherProps
 }) => {
   const getPosition = () => {
     if (!isNil(yScale)) {

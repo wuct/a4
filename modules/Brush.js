@@ -129,7 +129,7 @@ class Brush extends React.Component {
       >
         <rect
           opacity="0"
-          ref={ref => { this.overlay = ref }}
+          ref={(ref) => { this.overlay = ref }}
           width={width}
           height={height}
           style={styles}

@@ -20,7 +20,7 @@ const LineChart = ({
   data,
   color,
   dotColor,
-  ...otherProps,
+  ...otherProps
 }) => {
   const coordinates = zip(
     xs.map(xScale),

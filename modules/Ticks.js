@@ -22,7 +22,7 @@ const Ticks = ({
   values = [],
   scale,
   tickClassName,
-  ...otherProps,
+  ...otherProps
 }) => (
   <g {...otherProps}>
     {

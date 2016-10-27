@@ -15,7 +15,7 @@ const enhance = compose(
 const Label = ({
   textAnchor = 'middle',
   children,
-  ...otherProps,
+  ...otherProps
 }) =>
   <g {...otherProps}>
     <text

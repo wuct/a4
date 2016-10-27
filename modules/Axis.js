@@ -8,7 +8,7 @@ const Axis = ({
   children,
   axis,
   tickClassName,
-  ...otherProps,
+  ...otherProps
 }) => (
   <g {...otherProps}>
     {

@@ -16,7 +16,7 @@ const Dot = ({
   y = 0,
   r = 3,
   color = '#E6BEBC',
-  ...otherProps,
+  ...otherProps
 }) =>
   <circle
     cx={x}

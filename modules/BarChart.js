@@ -23,7 +23,7 @@ const BarChart = ({
   xScale,
   yScale,
   getBarProps = emptyFunction,
-  ...otherProps,
+  ...otherProps
 }) => (
   <g {...otherProps}>
     {

@@ -20,7 +20,7 @@ const Bar = ({
   y2,
   x,
   style,
-  ...otherProps,
+  ...otherProps
 }) => (
   <g>
     <rect

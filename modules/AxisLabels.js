@@ -45,7 +45,7 @@ const AxisLabels = ({
   scale,
   type,
   textAnchor,
-  ...otherProps,
+  ...otherProps
 }) => (
   <g {...otherProps}>
     {

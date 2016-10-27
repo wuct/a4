@@ -9,7 +9,7 @@ const enhance = getContext({
 const YAxis = ({
   yScale,
   tickValues,
-  ...otherProps,
+  ...otherProps
 }) =>
   createElement(Axis, {
     axis: 'y',

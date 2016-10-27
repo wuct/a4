@@ -15,7 +15,7 @@ const groupChildrenPropsByX = pipe(
   groupBy(prop('x')),
 )
 
-const transformY = (groupedProps, index, yScale) => datum => {
+const transformY = (groupedProps, index, yScale) => (datum) => {
   const yOffset = pipe(
     take(index),
     map(prop('y')),

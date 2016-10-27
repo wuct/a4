@@ -4,7 +4,7 @@ import Dragable from './Dragable'
 const BrushSelection = ({
   onDraging,
   onDragEnd,
-  ...otherProps,
+  ...otherProps
 }) => (
   <Dragable
     onDraging={onDraging}

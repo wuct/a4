@@ -1,7 +1,7 @@
 import { test } from 'ava'
 import createLinearScale from '../createLinearScale'
 
-test('createLinearScale', t => {
+test('createLinearScale', (t) => {
   const scale = createLinearScale({
     domain: [0, 10],
     range: [0, 100],
