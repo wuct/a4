@@ -27,16 +27,24 @@ const BarChart = ({
 }) => (
   <g {...otherProps}>
     {
-      data.map((datum, index) =>
-        createElement(Bar, {
-          key: datum.x,
-          x: xScale(datum.x),
+      data.map((datum, index) => {
+        const {
+          x,
+          y,
+          props = {},
+        } = datum
+        const scaledX = xScale(x)
+        const scaledY = yScale(y)
+
+        return createElement(Bar, {
+          key: `${scaledX}, ${scaledY}`,
+          x: scaledX,
           y1: yScale(0),
-          y2: yScale(datum.y),
-          datum,
+          y2: scaledY,
           ...getBarProps(datum, index),
+          ...props,
         })
-      )
+      })
     }
   </g>
 )

@@ -1,44 +1,46 @@
-import React, { Children, PropTypes, cloneElement } from 'react'
-import { getContext } from 'recompose'
-import { pipe, map, flatten, prop, groupBy, merge, take, sum } from 'ramda'
+import React, { Children, cloneElement, PropTypes } from 'react'
+import { setPropTypes } from 'recompose'
+import R from 'ramda'
 import { translateY } from './utils/translate'
 
-const embedPropsIntoData =
-  map(({ props: { data = [], ...otherProps }}) =>
-    data.map(merge(otherProps))
-  )
-
-const groupChildrenPropsByX = pipe(
+const groupChildrenPropsByX = R.pipe(
   Children.toArray,
-  embedPropsIntoData,
-  flatten,
-  groupBy(prop('x')),
+  R.map(R.pathOr([], ['props', 'data'])),
+  R.flatten,
+  R.groupBy(R.prop('x')),
 )
 
-const transformY = (groupedProps, index, yScale) => (datum) => {
-  const yOffset = pipe(
-    take(index),
-    map(prop('y')),
-    sum,
-    yScale,
-  )(groupedProps[datum.x])
+const createTransformY = (groupedProps, yScale, index) => (datum) => {
+  const {
+    [R.prop('x', datum)]: currentGroup,
+  } = groupedProps
 
-  return {
-    ...datum,
-    transform: translateY(yOffset - yScale(0)),
-  }
+  const sumOfYOffset = R.compose(
+    yScale,
+    R.sum,
+    R.map(R.prop('y')),
+    R.take(index),
+  )(currentGroup)
+
+  return R.assocPath(
+    ['props', 'transform'],
+    translateY(sumOfYOffset - yScale(0)),
+    datum
+  )
 }
 
 const enhance =
-  getContext({
+  setPropTypes({
     yScale: PropTypes.func,
-    xScale: PropTypes.func,
+    children: PropTypes.element,
   })
 
 const Stack = ({
   children,
-  yScale,
+  yScale, // Stacked charts should have the same scale.
 }) => {
+  // TODO: warn if children is not a array with at least 2 items
+
   const groupedProps = groupChildrenPropsByX(children)
 
   return (
@@ -47,8 +49,10 @@ const Stack = ({
         Children.map(children, (child, index) => {
           if (index === 0) return child
 
+          const transformY = createTransformY(groupedProps, yScale, index)
+
           return cloneElement(child, {
-            data: child.props.data.map(transformY(groupedProps, index, yScale)),
+            data: child.props.data.map(transformY),
           })
         })
       }

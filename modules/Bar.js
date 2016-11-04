@@ -9,7 +9,6 @@ const enhance = compose(
     y1: PropTypes.number,
     y2: PropTypes.number,
     x: PropTypes.number,
-    datum: PropTypes.object,
   }),
 )
 
@@ -22,19 +21,17 @@ const Bar = ({
   style,
   ...otherProps
 }) => (
-  <g>
-    <rect
-      x={x - (width / 2)}
-      y={y2}
-      height={y1 - y2}
-      width={width}
-      style={{
-        fill: color,
-        ...style,
-      }}
-      {...otherProps}
-    />
-  </g>
+  <rect
+    x={x - (width / 2)}
+    y={y2}
+    height={y1 - y2}
+    width={width}
+    style={{
+      fill: color,
+      ...style,
+    }}
+    {...otherProps}
+  />
 )
 
 export default enhance(Bar)
