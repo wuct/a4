@@ -1,9 +1,15 @@
 import React from 'react'
 import pure from 'recompose/pure'
 
-const Line = props =>
+const Line = ({
+  strokeWidth = 2,
+  stroke = '#EFEFEF',
+  ...otherProps,
+}) =>
   <line
-    {...props}
+    strokeWidth={strokeWidth}
+    stroke={stroke}
+    {...otherProps}
   />
 
 export default pure(Line)
