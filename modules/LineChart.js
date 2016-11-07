@@ -1,50 +1,56 @@
 import React, { PropTypes } from 'react'
-import { getContext, pure, compose } from 'recompose'
-import { zip } from 'ramda'
+import { pure, compose, setPropTypes } from 'recompose'
+import R from 'ramda'
 import createPath from './utils/createPath'
+import emptyFunction from './utils/emptyFunction'
 import Dot from './Dot'
 
 const enhance = compose(
-  getContext({
+  pure,
+  setPropTypes({
     yScale: PropTypes.func,
     xScale: PropTypes.func,
-    xs: PropTypes.array,
-  }),
-  pure,
+    getDotProps: PropTypes.func,
+    getLineProps: PropTypes.func,
+    data: PropTypes.arrayOf(
+      PropTypes.shape({
+        x: PropTypes.any,
+        y: PropTypes.any,
+      })
+    ),
+  })
 )
 
 const LineChart = ({
+  data: rawData = [],
   xScale,
   yScale,
-  xs,
-  data,
-  color,
-  dotColor,
+  getDotProps = emptyFunction,
+  getLineProps = emptyFunction,
   ...otherProps
 }) => {
-  const coordinates = zip(
-    xs.map(xScale),
-    data.map(yScale)
-  )
+  const dotProps = getDotProps()
+  const data = rawData.map(R.evolve({ x: xScale, y: yScale }))
 
   return (
-    <g>
+    <g {...otherProps}>
       <path
-        d={createPath(coordinates)}
-        stroke={color}
+        d={createPath(data)}
+        stroke="#EFEFEF"
         strokeWidth="2"
         fill="transparent"
-        {...otherProps}
+        {...getLineProps()}
       />
       {
-        dotColor &&
-          coordinates.map(([x, y], index) =>
+        dotProps &&
+          data.map(({ x, y }) =>
             <Dot
-              key={index}
+              key={`${x}, ${y}`}
               x={x}
               y={y}
               r={3}
-              color={dotColor}
+              color="#EFEFEF"
+              {...dotProps}
             />
           )
       }
