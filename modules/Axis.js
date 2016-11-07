@@ -1,10 +1,18 @@
-import React, { createElement, Children, cloneElement } from 'react'
+import React, { createElement, Children, cloneElement, PropTypes } from 'react'
+import { setPropTypes } from 'recompose'
 import Ticks from './Ticks'
+
+const enhance = setPropTypes({
+  tickValues: PropTypes.array,
+  scale: PropTypes.func.isRequired,
+  tickSize: PropTypes.number,
+  axis: PropTypes.string.isRequired,
+})
 
 const Axis = ({
   tickValues = [],
   scale,
-  tickSize,
+  tickSize = 0,
   children,
   axis,
   tickClassName,
@@ -37,5 +45,4 @@ const Axis = ({
   </g>
 )
 
-export default Axis
-
+export default enhance(Axis)

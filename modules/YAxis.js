@@ -1,22 +1,13 @@
-import { createElement, PropTypes } from 'react'
-import { getContext } from 'recompose'
+import React from 'react'
 import Axis from './Axis'
+import { translateX } from './utils/translate'
 
-const enhance = getContext({
-  yScale: PropTypes.func,
-})
+const YAxis = ({ position, ...otherProps }) =>
+  <Axis
+    axis="y"
+    transform={translateX(position)}
+    {...otherProps}
+  />
 
-const YAxis = ({
-  yScale,
-  tickValues,
-  ...otherProps
-}) =>
-  createElement(Axis, {
-    axis: 'y',
-    tickValues,
-    scale: yScale,
-    ...otherProps,
-  })
 
-export default enhance(YAxis)
-
+export default YAxis

@@ -1,47 +1,27 @@
-import React, { createElement, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { compose, pure, setPropTypes } from 'recompose'
 import R from 'ramda'
 import Label, { propTypes as LabelPropTypes } from './Label'
 import { translateX, translateY } from './utils/translate'
-
-
-const isFunction = R.is(Function)
-
-const handleLabel = (label, value, i) => {
-  if (isFunction(label)) {
-    return label(value, i)
-  }
-
-  if (label != null) {
-    return label
-  }
-
-  return i
-}
+import emptyFunction from './utils/emptyFunction'
 
 const enhance = compose(
   setPropTypes({
     ...LabelPropTypes,
     axis: PropTypes.oneOf(['x', 'y']),
-    label: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.node,
-    ]),
-    values: PropTypes.array,
+    tickValues: PropTypes.array,
     scale: PropTypes.func,
-    labelComponent: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.object,
-    ]),
+    getLabelProps: PropTypes.func,
+    getLabelValue: PropTypes.func,
   }),
   pure,
 )
 
 const AxisLabels = ({
   axis,
-  label,
-  labelComponent: LabelComponent = Label,
-  values,
+  tickValues,
+  getLabelProps = emptyFunction,
+  getLabelValue,
   scale,
   type,
   textAnchor,
@@ -49,15 +29,21 @@ const AxisLabels = ({
 }) => (
   <g {...otherProps}>
     {
-      values.map((value, i) =>
-        createElement(LabelComponent, {
-          key: i,
-          type,
-          textAnchor,
-          transform: axis === 'x'
+      tickValues.map((value, i) =>
+        <Label
+          key={i}
+          type={type}
+          textAnchor={textAnchor}
+          transform={axis === 'x'
             ? translateX(scale(value))
-            : translateY(scale(value)),
-        }, handleLabel(label, value, i))
+            : translateY(scale(value))
+          }
+          {...getLabelProps(value, i)}
+        >
+          {
+            getLabelValue ? getLabelValue(value, i) : value
+          }
+        </Label>
       )
     }
   </g>

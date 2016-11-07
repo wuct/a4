@@ -11,7 +11,6 @@ const enhance = compose(
     tickSize: PropTypes.number,
     values: PropTypes.array,
     scale: PropTypes.func,
-    tickClassName: PropTypes.string,
   }),
   pure,
 )
@@ -21,7 +20,6 @@ const Ticks = ({
   axis = 'x',
   values = [],
   scale,
-  tickClassName,
   ...otherProps
 }) => (
   <g {...otherProps}>
@@ -29,7 +27,6 @@ const Ticks = ({
       values.map(value =>
         createElement(Line, {
           key: value,
-          className: tickClassName,
           transform: axis === 'x'
             ? translateX(scale(value))
             : translateY(scale(value)),
