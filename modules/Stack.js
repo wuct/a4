@@ -32,7 +32,7 @@ const createTransformY = (groupedProps, yScale, index) => (datum) => {
 const enhance =
   setPropTypes({
     yScale: PropTypes.func,
-    children: PropTypes.element,
+    children: PropTypes.arrayOf(PropTypes.element),
   })
 
 const Stack = ({
