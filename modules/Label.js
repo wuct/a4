@@ -5,6 +5,8 @@ import { compose, pure, setPropTypes } from 'recompose'
 export const propTypes = {
   type: PropTypes.oneOf(['default', 'small']),
   textAnchor: PropTypes.string,
+  fill: PropTypes.string,
+  color: PropTypes.string, // alias for fill
 }
 
 const enhance = compose(
@@ -14,12 +16,15 @@ const enhance = compose(
 
 const Label = ({
   textAnchor = 'middle',
+  fill,
+  color = 'currentColor',
   children,
   ...otherProps
 }) =>
   <g {...otherProps}>
     <text
       textAnchor={textAnchor}
+      fill={fill || color}
     >
       {children}
     </text>
