@@ -24,29 +24,34 @@ const BarChart = ({
   yScale,
   getBarProps = emptyFunction,
   ...otherProps
-}) => (
-  <g {...otherProps}>
-    {
-      data.map((datum, index) => {
-        const {
-          x,
-          y,
-          props = {},
-        } = datum
-        const scaledX = xScale(x)
-        const scaledY = yScale(y)
+}) => {
+  const yBasis = yScale(0)
 
-        return createElement(Bar, {
-          key: `${scaledX}, ${scaledY}`,
-          x: scaledX,
-          y1: yScale(0),
-          y2: scaledY,
-          ...getBarProps(datum, index),
-          ...props,
+  return (
+    <g {...otherProps}>
+      {
+        data.map((datum, index) => {
+          const {
+            x,
+            y,
+            props = {},
+          } = datum
+          const scaledX = xScale(x)
+          const scaledY = yScale(y)
+
+          return createElement(Bar, {
+            key: `${scaledX}, ${scaledY}`,
+            x1: scaledX,
+            x2: scaledX,
+            y1: yBasis,
+            y2: scaledY,
+            ...getBarProps(datum, index),
+            ...props,
+          })
         })
-      })
-    }
-  </g>
-)
+      }
+    </g>
+  )
+}
 
 export default enhance(BarChart)

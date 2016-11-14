@@ -4,32 +4,35 @@ import { pure, compose, setPropTypes } from 'recompose'
 const enhance = compose(
   pure,
   setPropTypes({
-    width: PropTypes.number,
-    color: PropTypes.string,
+    strokeWidth: PropTypes.number,
+    width: PropTypes.number, // alias for strokeWidth
+    stroke: PropTypes.string,
+    color: PropTypes.string, // alias for stroke
+    x1: PropTypes.number,
+    x2: PropTypes.number,
     y1: PropTypes.number,
     y2: PropTypes.number,
-    x: PropTypes.number,
   }),
 )
 
 const Bar = ({
-  width = 10,
-  color,
+  x1,
+  x2,
   y1,
   y2,
-  x,
-  style,
+  strokeWidth,
+  width = 10,
+  stroke,
+  color = '#EFEFEF',
   ...otherProps
 }) => (
-  <rect
-    x={x - (width / 2)}
-    y={y2}
-    height={y1 - y2}
-    width={width}
-    style={{
-      fill: color,
-      ...style,
-    }}
+  <line
+    x1={x1}
+    x2={x2}
+    y1={y1}
+    y2={y2}
+    strokeWidth={strokeWidth || width}
+    stroke={stroke || color}
     {...otherProps}
   />
 )
