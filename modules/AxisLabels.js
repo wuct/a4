@@ -8,9 +8,9 @@ import emptyFunction from './utils/emptyFunction'
 const enhance = compose(
   setPropTypes({
     ...LabelPropTypes,
-    axis: PropTypes.oneOf(['x', 'y']),
-    tickValues: PropTypes.array,
-    scale: PropTypes.func,
+    axis: PropTypes.oneOf(['x', 'y']).isRequired,
+    tickValues: PropTypes.array.isRequired,
+    scale: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func,
     getLabelValue: PropTypes.func,
   }),

@@ -3,7 +3,7 @@ import { setPropTypes } from 'recompose'
 import Ticks from './Ticks'
 
 const enhance = setPropTypes({
-  tickValues: PropTypes.array,
+  tickValues: PropTypes.array.isRequired,
   scale: PropTypes.func.isRequired,
   tickSize: PropTypes.number,
   axis: PropTypes.string.isRequired,
@@ -15,7 +15,7 @@ const Axis = ({
   tickSize = 0,
   children,
   axis,
-  tickClassName,
+  getTickProps,
   ...otherProps
 }) => (
   <g {...otherProps}>
@@ -28,7 +28,7 @@ const Axis = ({
             tickSize,
             values: tickValues,
             scale,
-            tickClassName,
+            getTickProps,
           }
         )
       : null
@@ -37,7 +37,7 @@ const Axis = ({
       Children.map(children, (child, i) =>
         cloneElement(child, {
           key: i,
-          values: tickValues,
+          tickValues,
           scale,
         })
       )
