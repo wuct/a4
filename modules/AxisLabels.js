@@ -5,6 +5,8 @@ import Label, { propTypes as LabelPropTypes } from './Label'
 import { translateX, translateY } from './utils/translate'
 import emptyFunction from './utils/emptyFunction'
 
+const isFunction = x => typeof x === 'function'
+
 const enhance = compose(
   setPropTypes({
     ...LabelPropTypes,
@@ -13,6 +15,7 @@ const enhance = compose(
     scale: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func,
     getLabelValue: PropTypes.func,
+    children: PropTypes.func,
   }),
   pure,
 )
@@ -25,25 +28,30 @@ const AxisLabels = ({
   scale,
   type,
   textAnchor,
+  children,
   ...otherProps
 }) => (
   <g {...otherProps}>
     {
-      tickValues.map((value, i) =>
-        <Label
-          key={i}
-          type={type}
-          textAnchor={textAnchor}
-          transform={axis === 'x'
-            ? translateX(scale(value))
-            : translateY(scale(value))
-          }
-          {...getLabelProps(value, i)}
-        >
-          {
-            getLabelValue ? getLabelValue(value, i) : value
-          }
-        </Label>
+      typeof children === 'function' ? (
+        tickValues.map(children)
+      ) : (
+        tickValues.map((value, i) =>
+          <Label
+            key={i}
+            type={type}
+            textAnchor={textAnchor}
+            transform={axis === 'x'
+              ? translateX(scale(value))
+              : translateY(scale(value))
+            }
+            {...getLabelProps(value, i)}
+          >
+            {
+              getLabelValue ? getLabelValue(value, i) : value
+            }
+          </Label>
+        )
       )
     }
   </g>
