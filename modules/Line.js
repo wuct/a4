@@ -2,9 +2,9 @@ import React from 'react'
 import pure from 'recompose/pure'
 
 const Line = ({
-  strokeWidth = 2,
+  strokeWidth = 1,
   stroke = '#EFEFEF',
-  ...otherProps,
+  ...otherProps
 }) =>
   <line
     strokeWidth={strokeWidth}
