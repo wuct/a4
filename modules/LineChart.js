@@ -25,11 +25,10 @@ const LineChart = ({
   data: rawData = [],
   xScale,
   yScale,
-  getDotProps = emptyFunction,
+  getDotProps,
   getLineProps = emptyFunction,
   ...otherProps
 }) => {
-  const dotProps = getDotProps()
   const data = rawData.map(R.evolve({ x: xScale, y: yScale }))
 
   return (
@@ -42,17 +41,20 @@ const LineChart = ({
         {...getLineProps()}
       />
       {
-        dotProps &&
-          data.map(({ x, y }) =>
-            <Dot
-              key={`${x}, ${y}`}
-              x={x}
-              y={y}
-              r={3}
-              color="#EFEFEF"
-              {...dotProps}
-            />
-          )
+        getDotProps &&
+          rawData.map((datum, index) => {
+            const { x, y } = R.evolve({ x: xScale, y: yScale }, datum)
+            return (
+              <Dot
+                key={`${x}, ${y}`}
+                x={x}
+                y={y}
+                r={3}
+                color="#EFEFEF"
+                {...getDotProps(datum, index)}
+              />
+            )
+          })
       }
     </g>
   )
