@@ -1,11 +1,8 @@
 import React, { PropTypes } from 'react'
 import { compose, pure, setPropTypes } from 'recompose'
-import R from 'ramda'
 import Label, { propTypes as LabelPropTypes } from './Label'
 import { translateX, translateY } from './utils/translate'
 import emptyFunction from './utils/emptyFunction'
-
-const isFunction = x => typeof x === 'function'
 
 const enhance = compose(
   setPropTypes({
@@ -15,7 +12,7 @@ const enhance = compose(
     scale: PropTypes.func.isRequired,
     getLabelProps: PropTypes.func,
     getLabelValue: PropTypes.func,
-    children: PropTypes.func,
+    renderLabel: PropTypes.func,
   }),
   pure,
 )
@@ -28,23 +25,21 @@ const AxisLabels = ({
   scale,
   type,
   textAnchor,
-  children,
+  renderLabel,
   ...otherProps
 }) => (
   <g {...otherProps}>
     {
-      typeof children === 'function' ? (
-        tickValues.map(children)
+      typeof renderLabel === 'function' ? (
+        tickValues.map(renderLabel)
       ) : (
         tickValues.map((value, i) =>
           <Label
             key={i}
             type={type}
             textAnchor={textAnchor}
-            transform={axis === 'x'
-              ? translateX(scale(value))
-              : translateY(scale(value))
-            }
+            x={axis === 'x' ? scale(value) : 0}
+            y={axis === 'y' ? scale(value) : 0}
             {...getLabelProps(value, i)}
           >
             {
