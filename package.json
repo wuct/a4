@@ -55,7 +55,7 @@
     "eslint-plugin-react": "^6.4.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
-    "webpack": "^1.13.3"
+    "webpack": "^1.14.0"
   },
   "dependencies": {
     "date-fp": "^4.4.2",
