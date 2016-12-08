@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { getContext, pure, compose } from 'recompose'
-import translate from './utils/translate'
+import { translate } from './utils/translate'
 import Dot from './Dot'
 
 const enhance = compose(
