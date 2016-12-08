@@ -1,6 +1,7 @@
 export LineChart from './LineChart'
 export Bar from './Bar'
 export BarChart from './BarChart'
+export AreaChart from './AreaChart'
 export Brush from './Brush'
 export Label from './Label'
 export Stack from './Stack'
