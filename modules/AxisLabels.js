@@ -47,7 +47,7 @@ const AxisLabels = ({
               textAnchor={textAnchor}
               x={axis === 'x' ? scale(value) : 0}
               y={axis === 'y' ? scale(value) : 0}
-              {...getLabelProps(value, i)}
+              {...getLabelProps(value, i, tickValues)}
             >
               {label}
             </Label>
