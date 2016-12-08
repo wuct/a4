@@ -5,36 +5,39 @@ import createPath from './utils/createPath'
 import emptyFunction from './utils/emptyFunction'
 import Dot from './Dot'
 
+const isFunction = fn => typeof fn === 'function'
+
 const enhance = compose(
   pure,
   setPropTypes({
-    yScale: PropTypes.func,
-    xScale: PropTypes.func,
+    generator: PropTypes.func,
     getDotProps: PropTypes.func,
     getLineProps: PropTypes.func,
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        x: PropTypes.any,
-        y: PropTypes.any,
-      })
-    ),
+    data: PropTypes.array,
+
+    // deprecated
+    yScale: PropTypes.func,
+    xScale: PropTypes.func,
   })
 )
 
 const LineChart = ({
   data: rawData = [],
+  generator,
   xScale,
   yScale,
   getDotProps,
   getLineProps = emptyFunction,
   ...otherProps
 }) => {
-  const data = rawData.map(R.evolve({ x: xScale, y: yScale }))
+  const path = isFunction(generator)
+    ? generator(rawData)
+    : createPath(rawData.map(R.evolve({ x: xScale, y: yScale })))
 
   return (
     <g {...otherProps}>
       <path
-        d={createPath(data)}
+        d={path}
         stroke="#EFEFEF"
         strokeWidth="2"
         fill="transparent"
