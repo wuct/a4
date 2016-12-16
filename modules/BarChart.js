@@ -1,52 +1,45 @@
 import React, { createElement, PropTypes } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
+import R from 'ramda'
 import Bar from './Bar'
 import emptyFunction from './utils/emptyFunction'
+
+const defaultYBaseAccessor = R.always(0)
 
 const enhance = compose(
   pure,
   setPropTypes({
-    yScale: PropTypes.func,
-    xScale: PropTypes.func,
+    xAccessor: PropTypes.func,
+    yAccessor: PropTypes.func,
+    yBaseAccessor: PropTypes.func,
     getBarProps: PropTypes.func,
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        x: PropTypes.any,
-        y: PropTypes.any,
-      })
-    ),
+    data: PropTypes.array,
   })
 )
 
 const BarChart = ({
   data = [],
-  xScale,
-  yScale,
+  xAccessor,
+  yAccessor,
+  yBaseAccessor = defaultYBaseAccessor,
   getBarProps = emptyFunction,
   ...otherProps
 }) => {
-  const yBasis = yScale(0)
-
   return (
     <g {...otherProps}>
       {
         data.map((datum, index) => {
-          const {
-            x,
-            y,
-            props = {},
-          } = datum
-          const scaledX = xScale(x)
-          const scaledY = yScale(y)
+          const x = xAccessor(datum)
+          const y = yAccessor(datum)
+          const yBase = yBaseAccessor(datum)
 
           return createElement(Bar, {
-            key: `${scaledX}, ${scaledY}`,
-            x1: scaledX,
-            x2: scaledX,
-            y1: yBasis,
-            y2: scaledY,
-            ...getBarProps(datum, index),
-            ...props,
+            key: `${x}, ${y}`,
+            x1: x,
+            x2: x,
+            y1: yBase,
+            y2: y,
+            ...getBarProps(datum, index, data),
           })
         })
       }
