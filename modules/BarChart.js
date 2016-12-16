@@ -33,14 +33,20 @@ const BarChart = ({
           const y = yAccessor(datum)
           const yBase = yBaseAccessor(datum)
 
-          return createElement(Bar, {
-            key: `${x}, ${y}`,
-            x1: x,
-            x2: x,
-            y1: yBase,
-            y2: y,
-            ...getBarProps(datum, index, data),
-          })
+          if (R.isNil(x) || R.isNil(y) || R.isNil(yBase)) {
+            return null
+          }
+
+          return (
+            <Bar
+              key={`${x}, ${y}`}
+              x1={x}
+              x2={x}
+              y1={yBase}
+              y2={y}
+              {...getBarProps(datum, index, data)}
+            />
+          )
         })
       }
     </g>
