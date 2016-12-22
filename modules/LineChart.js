@@ -1,64 +1,58 @@
 import React, { PropTypes } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
-import R from 'ramda'
-import createPath from './utils/createPath'
+import { line, curveLinear } from 'd3-shape'
 import emptyFunction from './utils/emptyFunction'
-import Dot from './Dot'
 
 const isFunction = fn => typeof fn === 'function'
+
+const defaultXAccessor = d => d[0]
+const defaultYAccessor = d => d[1]
+const defaultDefinedAccessor = () => true
+const defaultCurveFactory = curveLinear
 
 const enhance = compose(
   pure,
   setPropTypes({
-    generator: PropTypes.func,
     getDotProps: PropTypes.func,
     getLineProps: PropTypes.func,
     data: PropTypes.array,
+    xAccessor: PropTypes.func,
+    yAccessor: PropTypes.func,
+    definedAccessor: PropTypes.func,
+    curveFactory: PropTypes.func,
 
     // deprecated
-    yScale: PropTypes.func,
-    xScale: PropTypes.func,
+    generator: PropTypes.func,
   })
 )
 
 const LineChart = ({
-  data: rawData = [],
+  data = [],
   generator,
-  xScale,
-  yScale,
-  getDotProps,
+  xAccessor = defaultXAccessor,
+  yAccessor = defaultYAccessor,
+  definedAccessor = defaultDefinedAccessor,
+  curveFactory = defaultCurveFactory,
   getLineProps = emptyFunction,
   ...otherProps
 }) => {
-  const path = isFunction(generator)
-    ? generator(rawData)
-    : createPath(rawData.map(R.evolve({ x: xScale, y: yScale })))
+  const gen = isFunction(generator)
+    ? generator
+    : line()
+      .x(xAccessor)
+      .y(yAccessor)
+      .defined(definedAccessor)
+      .curve(curveFactory)
 
   return (
     <g {...otherProps}>
       <path
-        d={path}
+        d={gen(data)}
         stroke="#EFEFEF"
         strokeWidth="2"
         fill="transparent"
-        {...getLineProps()}
+        {...getLineProps(data)}
       />
-      {
-        getDotProps &&
-          rawData.map((datum, index) => {
-            const { x, y } = R.evolve({ x: xScale, y: yScale }, datum)
-            return (
-              <Dot
-                key={`${x}, ${y}`}
-                x={x}
-                y={y}
-                r={3}
-                color="#EFEFEF"
-                {...getDotProps(datum, index)}
-              />
-            )
-          })
-      }
     </g>
   )
 }

@@ -58,6 +58,7 @@
     "webpack": "^1.13.3"
   },
   "dependencies": {
+    "d3-shape": "^1.0.4",
     "date-fp": "^4.4.2",
     "ramda": "^0.22.1",
     "recompose": "^0.20.2"
