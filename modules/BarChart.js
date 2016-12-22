@@ -1,4 +1,4 @@
-import React, { createElement, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { pure, compose, setPropTypes } from 'recompose'
 import R from 'ramda'
 import Bar from './Bar'
