@@ -1,4 +1,5 @@
 export LineChart from './LineChart'
+export DotChart from './DotChart'
 export Bar from './Bar'
 export BarChart from './BarChart'
 export AreaChart from './AreaChart'
