@@ -10,7 +10,4 @@ export XAxisLabels from './XAxisLabels'
 export YAxis from './YAxis'
 export YAxisLabels from './YAxisLabels'
 
-export getExtent from './utils/getExtent'
-export createLinearScale from './utils/createLinearScale'
-export createTimeScale from './utils/createTimeScale'
 export * from './utils/translate'

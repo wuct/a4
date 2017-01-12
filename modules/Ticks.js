@@ -1,10 +1,16 @@
 import React, { createElement, PropTypes } from 'react'
 import { compose, pure, setPropTypes } from 'recompose'
 import Line from './Line'
-import transformAxis from './utils/transformAxis'
-import getLineCoordinate from './utils/getLineCoordinate'
 import { translateX, translateY } from './utils/translate'
 import emptyFunction from './utils/emptyFunction'
+
+const getLineCoordinate = (axis, start, end) => ({
+  [`${axis}1`]: start,
+  [`${axis}2`]: end,
+})
+
+const transformAxis = axis =>
+  ({ x: 'y', y: 'x' }[axis])
 
 const enhance = compose(
   setPropTypes({
