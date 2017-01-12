@@ -1,7 +1,7 @@
 import React from 'react'
 import R from 'ramda'
 import createPath from './utils/createPath'
-import translate from './utils/translate'
+import { translate } from './utils/translate'
 import Dragable from './Dragable'
 import BrushSelection from './BrushSelection'
 import emptyFunction from './utils/emptyFunction'
@@ -85,7 +85,7 @@ class Brush extends React.Component {
       this.setState({
         delta: { dx, dy },
       })
-    }
+    },
   )
 
   onSelectionDragEnd = () => {

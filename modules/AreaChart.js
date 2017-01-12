@@ -8,7 +8,7 @@ const enhance = compose(
     generator: PropTypes.func,
     getAreaProps: PropTypes.func,
     data: PropTypes.array,
-  })
+  }),
 )
 
 const AreaChart = ({

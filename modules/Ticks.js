@@ -35,7 +35,7 @@ const Ticks = ({
             : translateY(scale(value)),
           ...getTickProps(value, index),
           ...getLineCoordinate(transformAxis(axis), 0, tickSize),
-        })
+        }),
       )
     }
   </g>

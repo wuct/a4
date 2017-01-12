@@ -23,7 +23,7 @@ const enhance = compose(
 
     // deprecated
     generator: PropTypes.func,
-  })
+  }),
 )
 
 const LineChart = ({

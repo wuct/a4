@@ -29,7 +29,7 @@ const Axis = ({
             values: tickValues,
             scale,
             getTickProps,
-          }
+          },
         )
       : null
     }
@@ -39,7 +39,7 @@ const Axis = ({
           key: i,
           tickValues,
           scale,
-        })
+        }),
       )
     }
   </g>

@@ -10,7 +10,7 @@ export const propTypes = {
 
 const enhance = compose(
   pure,
-  setPropTypes(propTypes)
+  setPropTypes(propTypes),
 )
 
 const Label = ({

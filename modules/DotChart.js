@@ -13,7 +13,7 @@ const enhance = compose(
     data: PropTypes.array,
     xAccessor: PropTypes.func.isRequired,
     yAccessor: PropTypes.func.isRequired,
-  })
+  }),
 )
 
 const DotChart = ({

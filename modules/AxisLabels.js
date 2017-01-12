@@ -42,7 +42,7 @@ const AxisLabels = ({
 
           return (
             <Label
-              key={i}
+              key={value}
               type={type}
               textAnchor={textAnchor}
               x={axis === 'x' ? scale(value) : 0}
@@ -52,7 +52,7 @@ const AxisLabels = ({
               {label}
             </Label>
           )
-        }
+        },
       ))
     }
   </g>

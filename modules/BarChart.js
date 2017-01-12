@@ -14,7 +14,7 @@ const enhance = compose(
     yBaseAccessor: PropTypes.func,
     getBarProps: PropTypes.func,
     data: PropTypes.array,
-  })
+  }),
 )
 
 const BarChart = ({
@@ -24,10 +24,9 @@ const BarChart = ({
   yBaseAccessor = defaultYBaseAccessor,
   getBarProps = emptyFunction,
   ...otherProps
-}) => {
-  return (
-    <g {...otherProps}>
-      {
+}) => (
+  <g {...otherProps}>
+    {
         data.map((datum, index) => {
           const x = xAccessor(datum)
           const y = yAccessor(datum)
@@ -49,8 +48,7 @@ const BarChart = ({
           )
         })
       }
-    </g>
+  </g>
   )
-}
 
 export default enhance(BarChart)
