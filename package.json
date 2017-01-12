@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint ./modules",
-    "test": "ava",
+    "test": "exit 0",
     "prebuild": "rm -rf lib",
     "build": "babel modules --out-dir lib --ignore __tests__",
     "prepublish": "npm run build"
@@ -29,17 +29,7 @@
     "url": "https://github.com/wuct/a4/issues"
   },
   "homepage": "https://github.com/wuct/a4#readme",
-  "ava": {
-    "files": [
-      "**/test/*.test.js"
-    ],
-    "babel": "inherit",
-    "require": [
-      "babel-register"
-    ]
-  },
   "devDependencies": {
-    "ava": "^0.17.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.13.2",
     "babel-eslint": "^7.1.0",
@@ -47,7 +37,6 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.9.0",
     "eslint": "^3.13.1",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-import": "^2.2.0",
