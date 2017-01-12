@@ -60,8 +60,8 @@
   "dependencies": {
     "d3-shape": "^1.0.4",
     "date-fp": "^4.4.2",
-    "ramda": "^0.22.1",
-    "recompose": "^0.20.2"
+    "ramda": "^0.23.0",
+    "recompose": "^0.21.2"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
