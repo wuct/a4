@@ -43,7 +43,7 @@
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.9.0",
     "react": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "react-dom": "^15.4.1",
     "webpack": "^1.13.3"
   },
   "dependencies": {
