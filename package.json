@@ -53,7 +53,7 @@
     "recompose": "^0.21.2"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0",
+    "react": "^15.4.0",
     "react-dom": "^0.14.0 || ^15.0.0"
   }
 }
