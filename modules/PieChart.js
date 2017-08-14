@@ -58,7 +58,7 @@ const PieChart = ({
           /* eslint react/no-array-index-key: 0 */
           <g key={i}>
             <path
-              fill={'#EFEFEF'}
+              fill="#EFEFEF"
               d={arcGen(d)}
               {...getArcProps(d)}
             />
