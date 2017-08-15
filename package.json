@@ -1,6 +1,6 @@
 {
   "name": "a4",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.6",
   "description": "A pure React chart library",
   "main": "lib/index.js",
   "scripts": {
@@ -14,15 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/wuct/a4.git"
   },
-  "keywords": [
-    "react",
-    "chart",
-    "graph",
-    "plot"
-  ],
-  "files": [
-    "lib"
-  ],
+  "keywords": ["react", "chart", "graph", "plot"],
+  "files": ["lib"],
   "author": "wuct",
   "license": "MIT",
   "bugs": {
